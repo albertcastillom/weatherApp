@@ -13,26 +13,28 @@ let processData = function(data){
  return object;
 }
 
+
+
 async function getWeather(location){
     try {
         const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=Q5J5VVK74FADGKEMEB3S6PNGP`, {mode: 'cors'});
         const weatherData =  await response.json();
-        console.log(weatherData);
-        console.log(processData(weatherData));
+        const proccesedData =  processData(weatherData);
+        return proccesedData;
     } catch(err){
         console.log(err);
     }
 }
 
+
 const form = document.querySelector("#addy");
 form.addEventListener("submit", (event)=>{
     event.preventDefault();
-    const street = document.getElementById('street').value;
     const city = document.getElementById('city').value;
     const state = document.getElementById('state').value;
-    const zip = document.getElementById('zip').value;
-    getWeather(`Address: ${street}, ${city}, ${state}, ${zip}`);
-
+    getWeather(`${city}, ${state}`);
+    
 });
 
+let defData = await getWeather("New York, NY");
 
