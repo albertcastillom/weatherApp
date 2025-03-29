@@ -28,13 +28,29 @@ async function getWeather(location){
 
 
 const form = document.querySelector("#addy");
-form.addEventListener("submit", (event)=>{
+form.addEventListener("submit", async (event)=>{
     event.preventDefault();
     const city = document.getElementById('city').value;
     const state = document.getElementById('state').value;
-    getWeather(`${city}, ${state}`);
+    let weather = await getWeather(`${city}, ${state}`);
+    renderWeather(weather);
     
 });
 
+let renderWeather = function(object){
+    let tempPara = document.querySelector("#Temp");
+    tempPara.textContent = `Temperature: ${object.temp}`;
+    let cityPara = document.querySelector("#City");
+    cityPara.textContent = `Location: ${object.city}`;
+    let precipPara = document.querySelector("#Precip");
+    precipPara.textContent = `Precipitation: ${object.precip}`;
+    let condsPara = document.querySelector("#cond");
+    condsPara.textContent = `Conditions: ${object.conditions}`;
+};
+
 let defData = await getWeather("New York, NY");
+
+renderWeather(defData);
+
+
 
